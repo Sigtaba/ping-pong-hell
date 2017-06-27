@@ -12,7 +12,17 @@ var jshint = require('gulp-jshint');
 //   console.log('hello gulp');
 // });
 
-var lib = require('bower-files')();
+var lib = require('bower-files')({
+  "overrides":{
+    "bootstrap" : {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  }
+});
 
 gulp.task('bowerJS', function () {
   return gulp.src(lib.ext('js').files)
@@ -20,6 +30,14 @@ gulp.task('bowerJS', function () {
     .pipe(uglify())
     .pipe(gulp.dest('./build/js'));
 });
+
+gulp.task('bowerCSS', function () {
+  return gulp.src(lib.ext('css').files)
+    .pipe(concat('vendor.css'))
+    .pipe(gulp.dest('./build/css'));
+});
+
+gulp.task('bower', ['bowerJS', 'bowerCSS']);
 
 gulp.task('concatInterface', function() {
   return gulp.src(['./js/*-interface.js'])
