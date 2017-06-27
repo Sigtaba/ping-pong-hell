@@ -1,16 +1,17 @@
 var del = require('del');
 var gulp = require('gulp');
-
-gulp.task('myTask', function(){
-  console.log('hello gulp');
-});
-
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var utilities = require('gulp-util');
 var buildProduction = utilities.env.production;
+var jshint = require('gulp-jshint');
+
+// gulp.task('myTask', function(){
+//   console.log('hello gulp');
+// });
+
 
 gulp.task('concatInterface', function() {
   return gulp.src(['./js/*-interface.js'])
@@ -42,9 +43,6 @@ gulp.task("build", ['clean'], function(){
     gulp.start('jsBrowserify');
   }
 });
-
-
-var jshint = require('gulp-jshint');
 
 gulp.task('jshint', function(){
   return gulp.src(['js/*.js'])
